@@ -4,6 +4,8 @@ import Routers from '../routes/Routers'
 
 
 const Layout = () => {
+
+
     return (
         <>
             <Header />
@@ -12,6 +14,8 @@ const Layout = () => {
             </main>
             <Footer />
         </>
+
+
     )
 }
 
