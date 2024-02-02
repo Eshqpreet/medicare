@@ -282,10 +282,10 @@ const Home = () => {
           </div>
         </div>
 
-        <Testimonial/>
+        <Testimonial />
       </section>
       {/* =========== Testimonials End========== */}
-      
+
     </>
   )
 }

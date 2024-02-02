@@ -1,3 +1,4 @@
+// review.js
 import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
@@ -35,13 +36,21 @@ reviewSchema.pre(/^find/, function (next) {
 });
 
 // Calculate and update average ratings after a new review is saved
-reviewSchema.post('save', function () {
-  this.constructor.calcAverageRatings(this.doctor);
+reviewSchema.post('save', async function (doc) {
+  // Update the totalRating in the corresponding doctor document
+  const Doctor = mongoose.model('Doctor');
+  await Doctor.findByIdAndUpdate(doc.doctor, {
+    $inc: { totalRating: 1 },
+  });
+
+  // Calculate and update average ratings
+  this.constructor.calcAverageRatings(doc.doctor);
 });
 
 // Calculate average ratings for a given doctor
 reviewSchema.statics.calcAverageRatings = async function (doctorId) {
-  //Aggregation Pipeline
+  const Doctor = mongoose.model('Doctor');
+
   const stats = await this.aggregate([
     {
       $match: { doctor: doctorId }
@@ -50,17 +59,20 @@ reviewSchema.statics.calcAverageRatings = async function (doctorId) {
       $group: {
         _id: '$doctor',
         numOfRating: { $sum: 1 },
-        avgRating: { $avg: '$rating' }
+        averageRating: { $avg: '$rating' }
       }
     }
   ]);
 
   console.log(stats);
-  
-  // Update the average ratings in the corresponding doctor document
-  await mongoose.model('Doctor').findByIdAndUpdate(doctorId, {
-    numOfRating: stats.length > 0 ? stats[0].numOfRating : 0,
-    avgRating: stats.length > 0 ? stats[0].avgRating : 0,
+
+  const averageRating = stats.length > 0 ? stats[0].averageRating : 0;
+  const numOfRating = stats.length > 0 ? stats[0].numOfRating : 0;
+
+  // Update the average ratings and totalRating in the corresponding doctor document
+  await Doctor.findByIdAndUpdate(doctorId, {
+    numOfRating,
+    averageRating,
   });
 };
 

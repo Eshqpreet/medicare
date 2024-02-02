@@ -38,7 +38,7 @@ const Profile = ({ doctorData }) => {
             about: doctorData?.about,
             photo: doctorData?.photo,
         })
-    },[doctorData])
+    }, [doctorData])
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -348,7 +348,7 @@ const Profile = ({ doctorData }) => {
                     <p className="form__label">Time Slots*</p>
                     {formData.timeSlots?.map((item, index) => <div key={index}>
                         <div>
-                            <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5">
+                            <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-4">
                                 <div>
                                     <p className="form__label">Day*</p>
                                     <select name="day" value={item.day} className="form__input py-3.5" onChange={e => handleTimeSlotChange(e, index)}>
@@ -364,45 +364,27 @@ const Profile = ({ doctorData }) => {
                                 </div>
                                 <div>
                                     <p className="form__label">Starting Time*</p>
-                                    <div className="flex items-center">
+                                    <div className="flex flex-col items-center justify-between gap-2">
                                         <input
                                             type="time"
                                             name="startingTime"
                                             value={item.startingtime}
-                                            className="form__input"
+                                            className="form__input w-[120px]"
                                             onChange={e => handleTimeSlotChange(e, index)}
                                         />
-                                        <select
-                                            name="startingTimePeriod"
-                                            value={item.startingTimePeriod}
-                                            className="form__input"
-                                            onChange={e => handleTimeSlotChange(e, index)}
-                                        >
-                                            <option value="AM">AM</option>
-                                            <option value="PM">PM</option>
-                                        </select>
                                     </div>
                                 </div>
 
                                 <div>
                                     <p className="form__label">Ending Time*</p>
-                                    <div className="flex items-center">
+                                    <div className="flex items-center justify-between gap-2 flex-col">
                                         <input
                                             type="time"
                                             name="endingTime"
                                             value={item.endingtime}
-                                            className="form__input"
+                                            className="form__input w-[120px]"
                                             onChange={e => handleTimeSlotChange(e, index)}
                                         />
-                                        <select
-                                            name="endingTimePeriod"
-                                            value={item.endingTimePeriod}
-                                            className="form__input"
-                                            onChange={e => handleTimeSlotChange(e, index)}
-                                        >
-                                            <option value="AM">AM</option>
-                                            <option value="PM">PM</option>
-                                        </select>
                                     </div>
                                 </div>
 

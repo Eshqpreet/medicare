@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
-import avatar from "../../assets/images/avatar-icon.png"
 import { formateDate } from "../../utils/formateDate"
 import { AiFillStar } from "react-icons/ai";
 import FeedbackForm from "./FeedbackForm";
 
-const Feedback = () => {
+const Feedback = ({ reviews, totalRating }) => {
 
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
@@ -12,35 +12,37 @@ const Feedback = () => {
         <div>
             <div className="mb-[50px]">
                 <h4 className="text-[20px] leading-[30px] font-bold textheadingColor mb-[30px] ">
-                    All reviews (689)
+                    All reviews ({totalRating})
                 </h4>
             </div>
 
-            <div className="flex justify-between gap-10 mb-[30px]">
+            {reviews?.map((review, index) =>
+            (<div key={index} className="flex justify-between gap-10 mb-[30px]">
                 <div className="flex gap-3">
                     <figure className="w-10 h-10 rounded-full">
-                        <img className="w-full" src={avatar} alt="" />
+                        <img className="w-full" src={review?.user?.photo} alt="" />
                     </figure>
 
                     <div>
                         <h5 className="text-[16px] leading-6 text-primaryColor font-bold">
-                            Howard Hamlin
+                            {review?.user?.name}
                         </h5>
 
                         <p className="text-[14px] leading-6 text-textColor ">
-                            {formateDate("02-14-2019")}
+                            {formateDate(review?.createdAt)}
                         </p>
 
                         <p className="text__para mt-3 font-medium text-[15px]">
-                            Dr. Christian Gale is an outstanding surgeon. His skill and compassion made a significant difference in my medical journey. I couldn't have asked for a better doctor. Thank you, Dr. Gale, for your exceptional care.
+                            {review.reviewText}
                         </p>
                     </div>
                 </div>
 
                 <div className="flex gap-1">
-                    {[...Array(5).keys()].map((_, index) => <AiFillStar key={index} color="#0067FF" />)}
+                    {[...Array(review?.rating).keys()].map((_, index) => <AiFillStar key={index} color="#0067FF" />)}
                 </div>
-            </div>
+            </div>)
+            )}
 
             {!showFeedbackForm && <div className="text-center">
                 <button className="btn" onClick={() => setShowFeedbackForm(true)}>

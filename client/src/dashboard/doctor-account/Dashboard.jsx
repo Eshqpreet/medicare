@@ -1,3 +1,4 @@
+
 import Loader from "../../components/Loader/Loading"
 import Error from "../../components/Error/Error"
 import useGetProfile from "../../hooks/useFetchData"
@@ -7,6 +8,7 @@ import { useState } from "react"
 import starIcon from "../../assets/images/Star.png"
 import DoctorAbout from "./../../pages/Doctors/DoctorAbout"
 import Profile from "./Profile"
+import Appointment from "./Appointment"
 
 const Dashboard = () => {
 
@@ -90,7 +92,7 @@ const Dashboard = () => {
                   )}
 
                   {tab === 'appointments' && (
-                    <div>appointments</div>
+                    <Appointment appointments={data.appointments} />
                   )}
 
                   {tab === 'settings' && (
