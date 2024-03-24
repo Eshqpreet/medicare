@@ -1,70 +1,55 @@
 /* eslint-disable react/prop-types */
 
-import { formateDate } from "../../utils/formateDate"
-
+import { MantineReactTable, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton } from 'mantine-react-table';
+import { Flex} from '@mantine/core'; // Import Menu, Button
+import { formatDate } from "../../utils/formateDate"; // Import formatDate function
 
 const Appointment = ({ appointments }) => {
+    const columns = [
+        { id: 'name', header: 'Name', accessorFn: (item) => `${item.user.name} (${item.user.email})`, align: 'left' },
+        { id: 'gender', header: 'Gender', accessorFn: (item) => item.user.gender, align: 'left' },
+        { id: 'payment', header: 'Payment', accessorFn: (item) => item.isPaid ? 'Paid' : 'Unpaid', align: 'left' },
+        { id: 'price', header: 'Price', accessorFn: (item) => item.ticketPrice, align: 'left' },
+        { id: 'bookedOn', header: 'Booked On', accessorFn: (item) => formatDate(item.createdAt), align: 'left' },
+    ];
+
     return (
-        <table className="w-full text-left text-sm text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" className="px-6 py-3">
-                        Name
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Gender
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Payment
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Price
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Booked On
-                    </th>
-                </tr>
-            </thead>
+        <MantineReactTable
+            columns={columns}
+            data={appointments}
+            pagination
+            itemsPerPage={10}
+            itemsPerPageOptions={[10, 20, 50]}
+            enableColumnFilterModes={true}
+            enableColumnOrdering={true}
+            enableFacetedValues={true}
+            enableGrouping={true}
+            enablePinning={true}
+            enableRowActions={false} // Disable row actions for now
+            enableRowSelection={false} // Disable row selection for now
+            initialState={{
+                showColumnFilters: true,
+                showGlobalFilter: true,
+            }}
+            paginationDisplayMode="pages"
+            positionToolbarAlertBanner="bottom"
+            mantinePaginationProps={{
+                radius: 'xl',
+                size: 'lg',
+            }}
+            mantineSearchTextInputProps={{
+                placeholder: 'Search',
+            }}
+            renderTopToolbar={({ table }) => (
+                <Flex p="md" justify="space-between">
+                    <Flex gap="xs">
+                        <MRT_GlobalFilterTextInput table={table} />
+                        <MRT_ToggleFiltersButton table={table} />
+                    </Flex>
+                </Flex>
+            )}
+        />
+    );
+};
 
-            <tbody>
-                {appointments?.map(item => <tr key={item._id}>
-
-                    <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
-                        <img src={item.user.photo} className="w-10 h-10 rounded-full" alt="" />
-                        <div className="text-base font-semibold">
-                            {item.user.name}
-                        </div>
-                        <div className="text-normal text-gray-500 ">
-                            {item.user.email}
-                        </div>
-                    </th>
-
-                    <td className="px-6 py-4"> {item.user.gender}</td>
-                    <td className="px-6 py-4">
-                        {item.isPaid && (
-                            <div className="flex items-center">
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2 ">
-                                    Paid
-                                </div>
-                            </div>
-                        )}
-
-                        {item.isPaid && (
-                            <div className="flex items-center">
-                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2 ">
-                                    Unpaid
-                                </div>
-                            </div>
-                        )}
-
-                    </td>
-                    <td className="px-6 py-4">{item.ticketPrice}</td>
-                    <td className="px-6 py-4">{formateDate(item.createAt)}</td>
-
-                </tr>)}
-            </tbody>
-        </table>
-    )
-}
-
-export default Appointment
+export default Appointment;
