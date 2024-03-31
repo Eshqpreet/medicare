@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 
 import { MantineReactTable, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton } from 'mantine-react-table';
-import { Flex} from '@mantine/core'; // Import Menu, Button
+import { Flex } from '@mantine/core'; // Import Menu, Button
 import { formateDate } from "../../utils/formateDate"; // Import formatDate function
 
 const Appointment = ({ appointments }) => {
     const columns = [
-        { id: 'name', header: 'Name', accessorFn: (item) => `${item.user.name} (${item.user.email})`, align: 'left' },
+        { id: 'name', header: 'Name', accessorFn: (item) => `${item.user.name}`, align: 'left' },
+        { id: 'email', header: 'Email', accessorFn: (item) => `${item.user.email}`, align: 'left' },
         { id: 'gender', header: 'Gender', accessorFn: (item) => item.user.gender, align: 'left' },
         { id: 'payment', header: 'Payment', accessorFn: (item) => item.isPaid ? 'Paid' : 'Unpaid', align: 'left' },
         { id: 'price', header: 'Price', accessorFn: (item) => item.ticketPrice, align: 'left' },
