@@ -2,7 +2,7 @@
 
 import { MantineReactTable, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton } from 'mantine-react-table';
 import { Flex} from '@mantine/core'; // Import Menu, Button
-import { formatDate } from "../../utils/formateDate"; // Import formatDate function
+import { formateDate } from "../../utils/formateDate"; // Import formatDate function
 
 const Appointment = ({ appointments }) => {
     const columns = [
@@ -10,7 +10,7 @@ const Appointment = ({ appointments }) => {
         { id: 'gender', header: 'Gender', accessorFn: (item) => item.user.gender, align: 'left' },
         { id: 'payment', header: 'Payment', accessorFn: (item) => item.isPaid ? 'Paid' : 'Unpaid', align: 'left' },
         { id: 'price', header: 'Price', accessorFn: (item) => item.ticketPrice, align: 'left' },
-        { id: 'bookedOn', header: 'Booked On', accessorFn: (item) => formatDate(item.createdAt), align: 'left' },
+        { id: 'bookedOn', header: 'Booked On', accessorFn: (item) => formateDate(item.createdAt), align: 'left' },
     ];
 
     return (
