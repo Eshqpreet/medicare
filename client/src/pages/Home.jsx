@@ -81,13 +81,14 @@ const Home = () => {
       </section>
       {/* ==========Hero Section End================= */}
 
-      <section>
+      <section className="relative z-[1]">
+
         <div className="container">
           <div className="lg:w-[470px] mx-auto">
             <h2 className="heading text-center">
               Delivering top-tier healthcare services.
             </h2>
-            <p className="text__para text-center">
+            <p className="text__para text-[black]  text-center">
               Top-tier healthcare accessible to all. Our healthcare system provides unparalleled, specialized medical services.
             </p>
           </div>
@@ -149,6 +150,8 @@ const Home = () => {
             </div>
           </div>
 
+        </div>
+        <div id="gooey" className="absolute top-5 lg:left-1/3 md:left-1/3 left-[35%] transform -translate-x-1/2 lg:h-[30vw] lg:w-[30vw] md:h-[35vw] md:w-[35vw] h-[40vw] w-[40vw] rounded-[50%] blur-[20px] z-[-2]">
         </div>
       </section>
 

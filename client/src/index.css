@@ -62,3 +62,22 @@
         @apply text-[16px] leading-7 mt-3
     }
 }
+
+#gooey {
+    background: linear-gradient(to top right, #cae9ec, #f7a5a5);
+    animation: gooey 4s ease-in-out infinite alternate;
+}
+
+/* .loginPage{
+
+} */
+
+@keyframes gooey {
+    from {
+        transform: translate(10%, -10%);
+    }
+
+    to {
+        transform: translate(-10%, 10%) skew(-10deg);
+    }
+}
